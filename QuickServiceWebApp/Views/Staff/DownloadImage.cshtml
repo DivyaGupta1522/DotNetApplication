@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "DownloadImage";
+    Layout = "~/Views/Shared/_Layout_Staff.cshtml";
+}
+
+
+<h2>Download Images</h2>
+
+@foreach (var item in Model)
+{
+    <img src="@item" style="width:auto;height:300px;" />
+    <a href="@item">Download</a>
+    <br />
+}
+

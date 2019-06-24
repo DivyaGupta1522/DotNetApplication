@@ -1,0 +1,58 @@
+﻿@model IEnumerable<QuickServiceWebApp.Models.Request>
+
+@{
+    ViewBag.Title = "ViewDashboard";
+    Layout = "~/Views/Shared/_Layout_Staff.cshtml";
+}
+
+
+<h4>Dashboard</h4>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RowKey)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProblemStatement)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.TimeRequestAssigned)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequestStatus)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RowKey)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProblemStatement)
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeRequestAssigned)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestStatus)
+            </td>
+
+            <td>
+                @Html.ActionLink("Complete", "SaveStatus", item, new { @class = "btn btn-info" }) |
+                @Html.ActionLink("Download Image", "DownloadImage", new { RowKey = item.RowKey })
+
+            </td>
+        </tr>
+    }
+
+</table>
+<div>
+    @Html.ActionLink("View Completed Jobs", "CompletedJobs")
+</div>

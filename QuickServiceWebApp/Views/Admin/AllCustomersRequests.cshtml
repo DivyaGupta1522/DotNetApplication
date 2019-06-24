@@ -1,0 +1,67 @@
+﻿@model IEnumerable<QuickServiceWebApp.Models.Request>
+
+@{
+    ViewBag.Title = "AllCustomersRequests";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h4>Requests</h4>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RowKey)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProblemStatement)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AssigneeId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequestStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeRequestRaised)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeRequestAssigned)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeRequestClosed)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RowKey)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProblemStatement)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AssigneeId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequestStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeRequestRaised)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeRequestAssigned)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeRequestClosed)
+        </td>
+    </tr>
+}
+
+</table>

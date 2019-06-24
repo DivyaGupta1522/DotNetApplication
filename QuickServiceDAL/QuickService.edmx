@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="QuickServiceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdminDetails">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="AdminName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AdminPassword" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomerDetails">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="CustomerEmailId" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="CustomerName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustomerPassword" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomerRequest">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="bigint" Nullable="false" />
+          <Property Name="CustomerId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ProblemStatement" Type="varchar(max)" Nullable="false" />
+          <Property Name="OrderId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="AssigneeId" Type="varchar" MaxLength="10" />
+          <Property Name="RequestStatus" Type="varchar" MaxLength="20" />
+          <Property Name="TimeRequestRaised" Type="datetime" />
+          <Property Name="TimeRequestAssigned" Type="datetime" />
+          <Property Name="TimeRequestClosed" Type="datetime" />
+          <Property Name="ImageUploaded" Type="image" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RequestIdQueue">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StaffDetails">
+          <Key>
+            <PropertyRef Name="StaffId" />
+          </Key>
+          <Property Name="StaffId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="StaffName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StaffPassword" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="JobAssigned" Type="bigint" />
+        </EntityType>
+        <Association Name="fk_cr_ai">
+          <End Role="StaffDetails" Type="Self.StaffDetails" Multiplicity="0..1" />
+          <End Role="CustomerRequest" Type="Self.CustomerRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffDetails">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="CustomerRequest">
+              <PropertyRef Name="AssigneeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cr_ci">
+          <End Role="CustomerDetails" Type="Self.CustomerDetails" Multiplicity="1" />
+          <End Role="CustomerRequest" Type="Self.CustomerRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerDetails">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="CustomerRequest">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QuickServiceModelStoreContainer">
+          <EntitySet Name="AdminDetails" EntityType="Self.AdminDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerDetails" EntityType="Self.CustomerDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerRequest" EntityType="Self.CustomerRequest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestIdQueue" EntityType="Self.RequestIdQueue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StaffDetails" EntityType="Self.StaffDetails" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_cr_ai" Association="Self.fk_cr_ai">
+            <End Role="StaffDetails" EntitySet="StaffDetails" />
+            <End Role="CustomerRequest" EntitySet="CustomerRequest" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cr_ci" Association="Self.fk_cr_ci">
+            <End Role="CustomerDetails" EntitySet="CustomerDetails" />
+            <End Role="CustomerRequest" EntitySet="CustomerRequest" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QuickServiceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AdminDetail">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AdminName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AdminPassword" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomerDetail">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustomerEmailId" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustomerPassword" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CustomerRequests" Relationship="Self.fk_cr_ci" FromRole="CustomerDetails" ToRole="CustomerRequest" />
+        </EntityType>
+        <EntityType Name="CustomerRequest">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="Int64" Nullable="false" />
+          <Property Name="CustomerId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProblemStatement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrderId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AssigneeId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="RequestStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TimeRequestRaised" Type="DateTime" Precision="3" />
+          <Property Name="TimeRequestAssigned" Type="DateTime" Precision="3" />
+          <Property Name="TimeRequestClosed" Type="DateTime" Precision="3" />
+          <Property Name="ImageUploaded" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="CustomerDetail" Relationship="Self.fk_cr_ci" FromRole="CustomerRequest" ToRole="CustomerDetails" />
+          <NavigationProperty Name="StaffDetail" Relationship="Self.fk_cr_ai" FromRole="CustomerRequest" ToRole="StaffDetails" />
+        </EntityType>
+        <EntityType Name="RequestIdQueue">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StaffDetail">
+          <Key>
+            <PropertyRef Name="StaffId" />
+          </Key>
+          <Property Name="StaffId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StaffName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StaffPassword" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="JobAssigned" Type="Int64" />
+          <NavigationProperty Name="CustomerRequests" Relationship="Self.fk_cr_ai" FromRole="StaffDetails" ToRole="CustomerRequest" />
+        </EntityType>
+        <Association Name="fk_cr_ci">
+          <End Role="CustomerDetails" Type="Self.CustomerDetail" Multiplicity="1" />
+          <End Role="CustomerRequest" Type="Self.CustomerRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerDetails">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="CustomerRequest">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cr_ai">
+          <End Role="StaffDetails" Type="Self.StaffDetail" Multiplicity="0..1" />
+          <End Role="CustomerRequest" Type="Self.CustomerRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffDetails">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="CustomerRequest">
+              <PropertyRef Name="AssigneeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QuickServiceDBContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdminDetails" EntityType="Self.AdminDetail" />
+          <EntitySet Name="CustomerDetails" EntityType="Self.CustomerDetail" />
+          <EntitySet Name="CustomerRequests" EntityType="Self.CustomerRequest" />
+          <EntitySet Name="RequestIdQueues" EntityType="Self.RequestIdQueue" />
+          <EntitySet Name="StaffDetails" EntityType="Self.StaffDetail" />
+          <AssociationSet Name="fk_cr_ci" Association="Self.fk_cr_ci">
+            <End Role="CustomerDetails" EntitySet="CustomerDetails" />
+            <End Role="CustomerRequest" EntitySet="CustomerRequests" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cr_ai" Association="Self.fk_cr_ai">
+            <End Role="StaffDetails" EntitySet="StaffDetails" />
+            <End Role="CustomerRequest" EntitySet="CustomerRequests" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QuickServiceModelStoreContainer" CdmEntityContainer="QuickServiceDBContext">
+          <EntitySetMapping Name="AdminDetails">
+            <EntityTypeMapping TypeName="QuickServiceModel.AdminDetail">
+              <MappingFragment StoreEntitySet="AdminDetails">
+                <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+                <ScalarProperty Name="AdminName" ColumnName="AdminName" />
+                <ScalarProperty Name="AdminPassword" ColumnName="AdminPassword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerDetails">
+            <EntityTypeMapping TypeName="QuickServiceModel.CustomerDetail">
+              <MappingFragment StoreEntitySet="CustomerDetails">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="CustomerEmailId" ColumnName="CustomerEmailId" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerPassword" ColumnName="CustomerPassword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerRequests">
+            <EntityTypeMapping TypeName="QuickServiceModel.CustomerRequest">
+              <MappingFragment StoreEntitySet="CustomerRequest">
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ProblemStatement" ColumnName="ProblemStatement" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="AssigneeId" ColumnName="AssigneeId" />
+                <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
+                <ScalarProperty Name="TimeRequestRaised" ColumnName="TimeRequestRaised" />
+                <ScalarProperty Name="TimeRequestAssigned" ColumnName="TimeRequestAssigned" />
+                <ScalarProperty Name="TimeRequestClosed" ColumnName="TimeRequestClosed" />
+                <ScalarProperty Name="ImageUploaded" ColumnName="ImageUploaded" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestIdQueues">
+            <EntityTypeMapping TypeName="QuickServiceModel.RequestIdQueue">
+              <MappingFragment StoreEntitySet="RequestIdQueue">
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StaffDetails">
+            <EntityTypeMapping TypeName="QuickServiceModel.StaffDetail">
+              <MappingFragment StoreEntitySet="StaffDetails">
+                <ScalarProperty Name="StaffId" ColumnName="StaffId" />
+                <ScalarProperty Name="StaffName" ColumnName="StaffName" />
+                <ScalarProperty Name="StaffPassword" ColumnName="StaffPassword" />
+                <ScalarProperty Name="JobAssigned" ColumnName="JobAssigned" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "GetRequestsUsingAjax";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h2>Get All Requests Using Ajax Call</h2>
+<div>
+    <input type="button" value="Get Requests" onclick="getAllRequests()" />
+    <br />
+    <br />
+    <table id="RequestTable" class="table">
+        <tr>
+            <th>Request Id</th>
+            <th>Problem Description</th>
+            <th>Customer Id</th>
+            <th>Order Id</th>
+            <th>Assignee Id</th>
+            <th>Request Status</th>
+            <th></th>
+        </tr>
+    </table>
+</div>
+
+@section scripts {
+    <script>
+   
+
+    function getAllRequests() {
+        
+        $.ajax({
+            // TODO: Replace with [URL of API APP]
+            url: "http://quickserviceapiapp542.azurewebsites.net/api/request/GetAllCustomerRequests",
+            //url: "[API APP URL]",
+            type: "get",
+            data: JSON.stringify(),
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data) {
+                if (data) {
+                    var len = data.length;
+                    var txt = "";
+                    if (len > 0) {
+                        for (var i = 0; i < len; i++) {
+                            if (data[i].RowKey && data[i].ProblemStatement) {
+                                txt += "<tr><td>" + data[i].RowKey + "</td><td>" + data[i].ProblemStatement + "</td><td>" + data[i].CustomerId + "</td><td>" + data[i].OrderId + "</td><td>" + data[i].AssigneeId + "</td><td>" + data[i].RequestStatus + "</td></tr>";
+                            }
+                        }
+                        if (txt != "") {
+                            $("#RequestTable tr td").remove();
+                            $("#RequestTable").append(txt);
+                        }
+                    }
+                }
+            },
+            error: function (data) { alert("error" + data); console.log(data); }
+        });
+    }
+    </script>
+}
+

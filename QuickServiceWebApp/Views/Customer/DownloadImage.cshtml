@@ -1,0 +1,18 @@
+﻿@model IEnumerable<string>
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>Images</h2>
+@foreach (var item in Model)
+{
+    <img src="@item" style="width:auto;height:300px;"/>
+    <a href="@item">Download</a>
+    <br />
+}
+<br />
+<br />
+<div>
+    @Html.ActionLink("Back to List", "GetMyRequests")
+</div>
+

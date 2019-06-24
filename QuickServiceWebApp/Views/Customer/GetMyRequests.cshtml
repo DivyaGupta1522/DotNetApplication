@@ -1,0 +1,69 @@
+﻿@model IEnumerable<QuickServiceWebApp.Models.Request>
+
+<h4>Requests</h4>
+<p>
+    @Html.ActionLink("Create New Request", "CreateRequest")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RowKey)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProblemStatement)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AssigneeId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequestStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeRequestRaised)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeRequestAssigned)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeRequestClosed)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RowKey)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProblemStatement)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AssigneeId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequestStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeRequestRaised)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeRequestAssigned)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeRequestClosed)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditProblemStatement",item) |
+            @Html.ActionLink("Download Images", "DownloadImage", new { RequestId = item.RowKey}) 
+        </td>
+    </tr>
+}
+
+</table>

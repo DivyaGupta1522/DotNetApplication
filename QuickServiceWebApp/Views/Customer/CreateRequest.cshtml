@@ -1,0 +1,93 @@
+﻿@model QuickServiceWebApp.Models.Request
+
+
+@section scripts{
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript">
+
+        //JavaScript code for Image Preview
+        window.onload = function () {
+            var files = document.querySelectorAll("input[type=file]");
+            files[0].addEventListener("change", function (e) {
+                if (this.files && this.files[0]) {
+
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.getElementById("preview").setAttribute("src", e.target.result);
+                        var image = document.getElementById("preview");
+                        image.height = 200;
+                        image.width = 200;
+                    }
+                    reader.readAsDataURL(this.files[0]);
+
+
+
+                }
+            });
+        }
+
+    </script>
+}
+
+@using (Html.BeginForm("CreateRequest", "Customer", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="row">
+            <div id="request-dp" class="col-md-6">
+
+                <h4>Any issues! Please, Let us know.</h4>
+                <h4><b>Create a Request</b></h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    <label class="control-label col-md-4" for="OrderId">Ordered Item  </label>
+                    <div class="col-md-8">
+                        @Html.DropDownList("orderList", "--Select--")
+                        @Html.ValidationMessageFor(model => model.OrderId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProblemStatement, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextAreaFor(model => model.ProblemStatement, new { htmlAttributes = new { @class = "form-control" }, style = "width: 400px; height: 100px;" })
+                        @Html.ValidationMessageFor(model => model.ProblemStatement, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label col-md-4" for="imagefile">Upload Image  </label>
+                    <div class="col-md-8">
+                        <input type="file" id="imagefile" name="imagefile" multiple accept="image/*" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4" for="preview">Image Preview  </label>
+                    <div class="col-md-8">
+                        <img id="preview">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-8">
+                        <input type="submit" value="Submit Request" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row"><div class="col-md-12"><br /><br /><br /></div></div>
+
+    </div>
+}
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
